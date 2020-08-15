@@ -17,7 +17,11 @@ import { VERTICAL } from '../constants';
  * based on x/y offsets and current scroll position.
  *
  */
-function ParallaxController({ scrollAxis = VERTICAL, scrollContainer }) {
+function ParallaxController({
+    scrollAxis = VERTICAL,
+    scrollContainer,
+    onUpdate,
+}) {
     // All parallax elements to be updated
     let elements = [];
 
@@ -95,8 +99,10 @@ function ParallaxController({ scrollAxis = VERTICAL, scrollContainer }) {
             if (updateCache) {
                 element.setCachedAttributes(view, scroll);
             }
-            return _updateElementPosition(element);
+            const newElm = _updateElementPosition(element);
+            return newElm;
         });
+        onUpdate(elements);
         // reset ticking so more animations can be called
         ticking = false;
     }
@@ -155,9 +161,6 @@ function ParallaxController({ scrollAxis = VERTICAL, scrollContainer }) {
         _updateElementPosition(newElement);
         return newElement;
     };
-
-    this.getStylesById = (id) =>
-        elements.find((element) => element.id === id)?.parallaxStyles;
 
     /**
      * Remove an element by id

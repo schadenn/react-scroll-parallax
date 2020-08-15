@@ -5,7 +5,7 @@ import ParallaxController from '../classes/ParallaxController';
 import { VERTICAL, HORIZONTAL } from '../constants';
 import validHTMLElement from '../utils/validHTMLElement';
 
-const createController = options => {
+const createController = (options) => {
     // Don't initialize on the server
     const isServer = typeof window === 'undefined';
 
@@ -33,7 +33,12 @@ export default class ParallaxProvider extends Component {
         this.controller = createController({
             scrollAxis: props.scrollAxis,
             scrollContainer: props.scrollContainer,
+            onUpdate: (elements) => this.setState({ elements }),
         });
+
+        this.state = {
+            elements: [],
+        };
     }
 
     componentDidUpdate(prevProps) {
@@ -50,7 +55,12 @@ export default class ParallaxProvider extends Component {
         const { children } = this.props;
 
         return (
-            <ParallaxContext.Provider value={this.controller}>
+            <ParallaxContext.Provider
+                value={{
+                    controller: this.controller,
+                    elements: this.state.elements,
+                }}
+            >
                 {children}
             </ParallaxContext.Provider>
         );

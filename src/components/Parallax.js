@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { v4 } from 'uuid';
 import ParallaxController from '../classes/ParallaxController';
 import withController from './withController';
 
@@ -28,10 +27,6 @@ class Parallax extends Component {
         y: PropTypes.arrayOf(
             PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         ),
-    };
-
-    state = {
-        id: v4(),
     };
 
     componentDidMount() {
@@ -74,7 +69,7 @@ class Parallax extends Component {
 
     _getElementOptions() {
         return {
-            id: this.state.id,
+            id: this.props.id,
             elInner: this._inner,
             elOuter: this._outer,
             props: {
@@ -107,6 +102,8 @@ class Parallax extends Component {
             tagInner: Inner,
             styleOuter,
             styleInner,
+            elements,
+            parallaxStyles,
         } = this.props;
 
         const rootClass = 'parallax-outer' + (className ? ` ${className}` : '');
@@ -122,7 +119,7 @@ class Parallax extends Component {
                     ref={this.mapRefInner}
                     style={{
                         ...styleInner,
-                        transform: this.controller.getStylesById(this.state.id),
+                        transform: parallaxStyles,
                     }}
                 >
                     {children}
