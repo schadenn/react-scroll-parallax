@@ -6,7 +6,7 @@ import { getParallaxOffsets } from './getParallaxOffsets';
  * @param {object} element
  * @param {number} percentMoved
  */
-export function setParallaxStyles(elInner, offsets, percentMoved) {
+export function getParallaxStyles(elInner, offsets, percentMoved) {
     // Get the parallax X and Y offsets
     const {
         x: { value: xv, unit: xu },
@@ -14,7 +14,7 @@ export function setParallaxStyles(elInner, offsets, percentMoved) {
     } = getParallaxOffsets(offsets, percentMoved);
 
     // Apply styles
-    elInner.style.transform = `translate3d(${xv}${xu}, ${yv}${yu}, 0)`;
+    return `translate3d(${xv}${xu}, ${yv}${yu}, 0)`;
 }
 
 /**

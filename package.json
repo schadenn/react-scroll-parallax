@@ -56,7 +56,8 @@
   "author": "J Scott Smith",
   "license": "MIT",
   "dependencies": {
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.5.10",
+    "uuid": "^8.3.0"
   },
   "peerDependencies": {
     "react": "^16.3.0-0"

@@ -3,7 +3,7 @@ import {
     getOffsets,
     isElementInView,
     percentMoved,
-    setParallaxStyles,
+    getParallaxStyles,
 } from '../helpers/index';
 import { VERTICAL } from '../constants';
 import Bounds from './Bounds';
@@ -15,7 +15,7 @@ export class Element {
         this.elOuter = options.elOuter;
         this.props = options.props;
         this.scrollAxis = options.scrollAxis;
-        this.id = createId();
+        this.id = options.id;
         this.offsets = getOffsets(this.props);
         this.isInView = null;
         this.percent = 0;
@@ -55,9 +55,13 @@ export class Element {
             scroll.x
         );
 
-        setParallaxStyles(this.elInner, this.offsets, this.percent);
+        const parallaxStyles = getParallaxStyles(
+            this.elInner,
+            this.offsets,
+            this.percent
+        );
 
-        return this;
+        return { ...this, parallaxStyles };
     }
 
     _updatePositionVertical(view, scroll) {
@@ -77,8 +81,12 @@ export class Element {
             scroll.y
         );
 
-        setParallaxStyles(this.elInner, this.offsets, this.percent);
+        const parallaxStyles = getParallaxStyles(
+            this.elInner,
+            this.offsets,
+            this.percent
+        );
 
-        return this;
+        return { ...this, parallaxStyles };
     }
 }
